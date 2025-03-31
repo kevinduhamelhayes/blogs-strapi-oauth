@@ -1,6 +1,20 @@
 # Blog Builder Project
 
-Este proyecto es un blog privado y álbum de recuerdos creado con Next.js, TypeScript y Tailwind CSS. A diferencia de la versión original, esta implementación utiliza Strapi como CMS headless para la gestión de contenido y Supabase para la autenticación de usuarios.
+## Actualización del proyecto
+
+Este proyecto ha sido configurado con:
+- Next.js 14 con App Router y TypeScript
+- Tailwind CSS y Shadcn UI para el diseño
+- Supabase para la autenticación de usuarios
+- Strapi como headless CMS para la gestión de contenido
+- Google Analytics 4 para el seguimiento de eventos
+
+El proyecto está en desarrollo y actualmente incluye:
+- Sistema de autenticación completo
+- Estructura de carpetas lista para la integración con Strapi
+- Temas claro/oscuro
+- Componentes básicos (Header, Footer, Login)
+- Middleware para protección de rutas
 
 ## Propósito Principal
 
