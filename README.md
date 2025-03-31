@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog Builder Project
 
-## Getting Started
+Este proyecto es un blog privado y álbum de recuerdos creado con Next.js, TypeScript y Tailwind CSS. A diferencia de la versión original, esta implementación utiliza Strapi como CMS headless para la gestión de contenido y Supabase para la autenticación de usuarios.
 
-First, run the development server:
+## Propósito Principal
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Contenido Gestionado por CMS**: Los posts del blog y las páginas estáticas ahora se gestionan a través de Strapi CMS, permitiendo una administración más sencilla del contenido.
+- **Autenticación Robusta**: Implementa autenticación segura mediante Supabase Auth, con soporte para inicio de sesión con email/contraseña.
+- **Diseño Personalizado**: Utiliza Tailwind CSS y Shadcn/ui para un diseño visual limpio y adaptado, con un tema "bronce" predominante y modo oscuro.
+- **Análisis de Uso**: Mantiene la integración con Google Analytics 4 (GA4) para rastrear interacciones clave.
+
+## Tecnologías Utilizadas
+
+- **Framework**: Next.js 14 (App Router)
+- **Lenguaje**: TypeScript
+- **Estilos**: Tailwind CSS
+- **Componentes UI**: Shadcn UI
+- **CMS**: Strapi (Headless CMS)
+- **Autenticación**: Supabase Auth
+- **Markdown Rendering**: react-markdown con plugins
+- **Modo Oscuro**: next-themes
+- **Análisis**: Google Analytics 4
+- **Despliegue**: Vercel (frontend) + Supabase (backend)
+
+## Estructura del Proyecto
+
+```
+/
+├── public/             # Archivos estáticos (imágenes, fuentes)
+│   └── images/
+│       ├── blog/       # Imágenes específicas de los posts (organizadas por slug)
+│       ├── nuestro-amor/
+│       ├── sobre-mi/
+│       ├── sobre-ti/
+│       └── ...         # Otras imágenes globales
+├── src/
+│   ├── app/            # Rutas del App Router (páginas y APIs)
+│   │   ├── (auth)/     # Grupo de rutas para autenticación (login)
+│   │   ├── (main)/     # Grupo de rutas principales (protegidas)
+│   │   │   ├── admin/      # Rutas de administración
+│   │   │   ├── blog/       # Rutas del blog ([slug], page)
+│   │   │   ├── nuestro-amor/
+│   │   │   ├── sobre-mi/
+│   │   │   ├── sobre-ti/
+│   │   │   ├── tag/        # Rutas para tags ([tag], page)
+│   │   │   ├── layout.tsx  # Layout principal (protegido)
+│   │   │   └── page.tsx    # Página de inicio
+│   │   ├── api/          # Rutas de API
+│   │   ├── layout.tsx    # Layout raíz
+│   │   ├── globals.css   # Estilos globales
+│   │   ├── not-found.tsx # Página 404
+│   │   └── providers.tsx # Proveedores de contexto
+│   ├── components/     # Componentes React reutilizables
+│   │   ├── ui/         # Componentes Shadcn/ui
+│   │   ├── auth/       # Componentes relacionados con autenticación
+│   │   ├── blog/       # Componentes específicos del blog
+│   │   ├── BlogCarousel.tsx
+│   │   ├── BlogPostContent.tsx
+│   │   ├── BlogPostPreview.tsx
+│   │   ├── DarkModeToggle.tsx
+│   │   ├── Footer.tsx
+│   │   ├── GoogleAnalytics.tsx
+│   │   ├── Header.tsx
+│   │   └── UserTracker.tsx
+│   ├── lib/              # Lógica core, utilidades, datos
+│   │   ├── strapi/       # Funciones para interactuar con la API de Strapi
+│   │   ├── supabase/     # Configuración y utilidades de Supabase
+│   │   ├── utils/        # Funciones de utilidad generales
+│   │   ├── ga-utils.ts   # Utilidad para enviar eventos GA4
+│   │   └── ...
+│   ├── types/            # Definiciones de tipos globales (TypeScript)
+│   └── middleware.ts     # Middleware de Next.js (para proteger rutas)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Variables de Entorno
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-url.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-## Learn More
+# Strapi
+NEXT_PUBLIC_STRAPI_API_URL=http://localhost:1337
+NEXT_PUBLIC_STRAPI_TOKEN=your-strapi-api-token
 
-To learn more about Next.js, take a look at the following resources:
+# Google Analytics 4
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Instalación y Ejecución Local
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/tu-usuario/blog-builder.git
+   cd blog-builder
+   ```
 
-## Deploy on Vercel
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Crear y configurar `.env.local`**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Abrir [http://localhost:3000](http://localhost:3000) en tu navegador.**
+
+## Configuración del CMS (Strapi)
+
+Para el CMS utilizamos Strapi, que debe ser configurado por separado. Instrucciones detalladas de instalación y configuración en [la documentación oficial de Strapi](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html).
+
+## Configuración de Supabase
+
+Para la autenticación utilizamos Supabase. Instrucciones para configurar un proyecto y la autenticación en [la documentación oficial de Supabase](https://supabase.com/docs/guides/auth).
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
